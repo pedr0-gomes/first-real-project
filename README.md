@@ -35,6 +35,6 @@ Next.js (App Router) · Supabase (Postgres + auth) · Vercel · API de LLM.
 
 ## Estado
 
-Pré-implementação. Idea, research, grill, PRD e o fatiamento em issues fechados;
-esqueleto do repositório montado. Código ainda não começou — próxima etapa é
-implementar a config (slice 01) e o motor por TDD (slice 02).
+Implementação iniciada. Idea, research, grill, PRD e o fatiamento em issues
+fechados; **slice 01 (config) feito** — o tipo `ProjetoConfig` e as duas configs
+existem e type-checkam. Próxima etapa: o motor por TDD (slice 02).
