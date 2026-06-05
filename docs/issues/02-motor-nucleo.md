@@ -24,14 +24,14 @@ Fica de fora deste slice: semana parcial e flags de inconsistência (slice 03).
 
 ## Acceptance criteria
 
-- [ ] Testes escritos antes da implementação (red-green-refactor)
-- [ ] Semana cheia só com grade fixa → estrutura correta, sem coringa indevido
-- [ ] Semana que precisa de coringa → ΔH preenchido até fechar a carga exata
-- [ ] Coringa distribuído nos dias úteis livres; resto do arredondamento na sexta
-- [ ] `tetoHorasDiaCoringa` guia a distribuição mas nunca corta atividade real
-- [ ] Coringa só vai pro fim de semana quando `aceitaFimDeSemana` é true
-- [ ] Soma de cada semana = `cargaSemanal` exata
-- [ ] Motor é puro: mesma entrada → mesma saída, sem I/O
+- [x] Testes escritos antes da implementação (red-green-refactor)
+- [x] Semana cheia só com grade fixa → estrutura correta, sem coringa indevido
+- [x] Semana que precisa de coringa → ΔH preenchido até fechar a carga exata
+- [x] Coringa distribuído nos dias úteis livres; resto do arredondamento na sexta
+- [x] `tetoHorasDiaCoringa` guia a distribuição mas nunca corta atividade real
+- [x] Coringa só vai pro fim de semana quando `aceitaFimDeSemana` é true
+- [x] Soma de cada semana = `cargaSemanal` exata
+- [x] Motor é puro: mesma entrada → mesma saída, sem I/O
 
 ## Blocked by
 

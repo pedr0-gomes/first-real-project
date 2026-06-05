@@ -63,10 +63,17 @@ CC0002), coladas na sessão de 2026-06-04/05. Formato de saída comum:
   puro em `src/` (sem scaffold Next — borda vem nos slices de UI/persistência),
   type-check limpo. Grades fixas preenchidas do Calendar e confirmadas: LoOBI 2
   reuniões/sem; CC0002 6h de plantão/sem. Commit `75bc82d`. 2026-06-05.
-- **Próxima jogada:** **slice 02** (motor núcleo, TDD) — atividades + config + mês
-  → estrutura semanal, fechando a carga com o coringa. Coração dos testes.
-  Calibrar `tetoHorasDiaCoringa` (hoje `4`, chute) com teste real. Decisão HITL
-  pendente (provider LLM + SDK) vive no slice 05, não trava.
+- **Slice 02 ✓** — motor núcleo (TDD, vitest), `src/motor/`. `consolidar(atividades,
+  config, mes)` puro: particiona o mês em semanas seg→dom, expande grade + soma
+  reais, fecha ΔH com coringa (uniforme nos úteis livres → resto recuando da sexta,
+  tampado pelo teto soft → transbordo pro FDS se `aceitaFimDeSemana`). 7 testes
+  verdes; teto exercitado com teste real (2 ciclos passaram green-first por
+  construção adiantada no ciclo 2 — lição: código mínimo). 2026-06-05.
+- **Próxima jogada:** **slice 03** (motor bordas) — semana parcial
+  (`cheia`/`proporcional`) + flags de inconsistência. Absorve o que o 02 deixou
+  fora de propósito: **transbordo soft puro** (ΔH > capacidade até no FDS → hoje o
+  resto é descartado e a soma quebra → vira flag). Alternativa: slice 04
+  (formatador). Decisão HITL pendente (provider LLM + SDK) vive no slice 05, não trava.
 - **Transversal ✓** — registrado no sistema global em 2026-06-05: entrada na
   database [Construções](https://www.notion.so/376ab645e3bb81f6935fd72700848367)
   (status ativo) + ponteiro no `CONTEXT.md` global.
