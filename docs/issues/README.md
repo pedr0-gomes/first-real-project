@@ -28,6 +28,17 @@ não o tracer-bullet UI-first do skill.
 | 09 | [UI geração](09-ui-geracao.md) | AFK | 03, 04, 06, 07 |
 | 10 | [Deploy online](10-deploy-online.md) | AFK | 08, 09 |
 
+## Estado e reordenação (2026-06-05)
+
+- **01–05 ✓** (núcleo puro, 24 testes). **06** código-completo, verificação
+  ponta-a-ponta pendente. **07 ✓** (verificado; auth por code flow — ver
+  `docs/adr/0003`).
+- **Reordenação: 09 (geração) antes de 08 (captura).** A captura depende da
+  decisão de provider LLM (pendente, abaixo); a geração não depende de nada além
+  do núcleo + persistência, já prontos. Um caminho determinístico — entrada
+  **manual** de atividade + geração — entrega o produto funcionando sem o LLM,
+  que vira comodidade adicionada depois. Estado vivo no `CONTEXT.md`.
+
 ## Decisão pendente embutida
 
 Provider de LLM (Claude vs OpenAI) + SDK (direta vs Vercel AI SDK) — HITL, vive no
