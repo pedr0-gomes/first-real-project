@@ -1,6 +1,6 @@
 # CONTEXT.md — first-real-project
 
-Última atualização: 2026-06-05 (slices 06 e 07 fechados; caminho determinístico em UI)
+Última atualização: 2026-06-05 (slice 06 verificado; geração no ar — 1º relatório real ponta a ponta; atalho de login pra dev)
 
 ## O que é
 
@@ -100,7 +100,7 @@ CC0002), coladas na sessão de 2026-06-04/05. Formato de saída comum:
   `gpt-4o-mini`; SDK direta vs Vercel AI SDK) — não trava, liga junto da chamada real/UI;
   critério: modelo pequeno por custo. (2) parse mínimo de propósito (sem tratar cercas
   markdown ` ```json `) — endurecer com o adaptador real. 2026-06-05.
-- **Slice 06 ✓ (código; verificação pendente)** — persistência Supabase, primeira borda de
+- **Slice 06 ✓ (verificado)** — persistência Supabase, primeira borda de
   infra. Scaffold Next 16 (App Router em `src/app/`, manual em vez de `create-next-app` pra
   preservar o tsconfig estrito); clientes `@supabase/ssr` server (cookies async) + browser
   com publishable key (RLS aplicada, secret key não usada); schema `atividades` + RLS
@@ -109,8 +109,9 @@ CC0002), coladas na sessão de 2026-06-04/05. Formato de saída comum:
   fica no git como schema canônico, não como fonte aplicada); CRUD em Server Actions
   (`src/app/actions/atividades.ts`), todas via `getUser()` no servidor. Domínio `Atividade`
   estende `AtividadeReal` → alimenta o motor direto; mapa puro isola o snake_case. Commits
-  `c033ed5`, `d85fac5`, `5e02a4f`. **Pendente:** teste ponta-a-ponta (criar/listar/apagar pela
-  tela + RLS isolando outro user) — destravado pelo 07, fica pra próxima sessão.
+  `c033ed5`, `d85fac5`, `5e02a4f`. **Verificado** ponta a ponta: criar/listar/apagar pela
+  `/atividades`, conferido no Table Editor que grava com o `user_id` certo. RLS isolando outro
+  user não testada (usuário único; a trava real é o `getUser()` no servidor).
 - **Slice 07 ✓** — auth magic link usuário único, **verificado funcionando** ponta a ponta.
   `signInWithOtp({ shouldCreateUser: false })` (cadastro fechado; conta criada à mão no
   dashboard); middleware refresca sessão + redireciona deslogado (UX), a trava real é
@@ -118,19 +119,28 @@ CC0002), coladas na sessão de 2026-06-04/05. Formato de saída comum:
   template de e-mail (exige SMTP) → code flow (`/auth/callback` + `exchangeCodeForSession`) no
   template padrão, em vez de `token_hash`/`verifyOtp`. Registrado em `docs/adr/0003`. Commits
   `ba8fa54`, `c655831`.
-- **Caminho determinístico (UI) — em curso** — entrada manual de atividade + lista
+- **Caminho determinístico (UI) ✓** — entrada manual de atividade + lista
   (criar/listar/apagar), server-rendered **sem componente client** (troca de projeto = link
   `?projeto=`; categorias ativas saem da config no servidor; `<form>` → Server Action com
   validação server-side). Exercita o 06 ponta a ponta, sem LLM. Commit `e956a81`.
   **Reordenação:** geração (09) **antes** da captura por LLM (08) — a parte determinística
   (motor + formatador + persistência) já está pronta; o LLM é comodidade que entra depois. A
   decisão de provider LLM segue pendente, agora explicitamente atrás deste caminho.
-- **Próxima jogada:** (1) **fechar o teste do 06** — logado, criar 2-3 atividades pela
-  `/atividades`, conferir no Table Editor que gravam com o `user_id` certo, testar o apagar.
-  (2) **metade de geração** — tela que pega `listarAtividades` → `consolidar` → `formatar` →
-  mostra o relatório no template + flags: o primeiro relatório real saindo. Depois: decisão
-  LLM + captura por texto livre (08), deploy (10). Pré-requisito de runtime já feito pelo
-  Pedro: `.env.local` com URL + publishable key na máquina que roda o app.
+- **Geração (slice 09) ✓** — tela `/relatorio` server-rendered: `listarAtividades` →
+  `consolidar` → `formatar` → relatório no template + seção "Revisar" com as flags do motor.
+  Mês via `?mes=YYYY-MM` (form GET, default mês corrente); o motor recorta ao mês (ADR 0002),
+  então a lista inteira do projeto entra sem filtro. **1º relatório real saiu ponta a ponta**
+  (Supabase → motor → formatador → tela).
+- **Atalho de login pra dev** — `/auth/dev-login` (guardado por `NODE_ENV`, 404 fora de dev)
+  loga sem e-mail, driblando o rate limit de e-mail do plano free do Supabase. Usa
+  `service_role` (`SUPABASE_SECRET_KEY` no `.env.local`) + `verifyOtp(token_hash)`. **Lição:** o
+  fluxo PKCE do app (ADR 0003) barra magic link gerado por admin — falta o `code_verifier` no
+  browser; o `token_hash` via `verifyOtp` contorna sem tocar o fluxo de produção.
+- **Próxima jogada:** (1) **captura por texto livre / LLM (slice 08)** — decisão de provider
+  pendente (Claude `haiku` vs OpenAI `gpt-4o-mini`; SDK direta vs Vercel AI SDK; critério:
+  modelo pequeno por custo) + ligar a chamada real no `ClienteLLM` + tela de confirmação.
+  (2) **deploy (slice 10)**. **Pré-requisito de runtime atualizado:** `.env.local` precisa de
+  URL + publishable key + `SUPABASE_SECRET_KEY` (esta última só pro atalho de dev).
 - **Transversal ✓** — registrado no sistema global em 2026-06-05: entrada na
   database [Construções](https://www.notion.so/376ab645e3bb81f6935fd72700848367)
   (status ativo) + ponteiro no `CONTEXT.md` global.
