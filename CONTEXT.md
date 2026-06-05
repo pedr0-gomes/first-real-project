@@ -68,7 +68,7 @@ CC0002), coladas na sessão de 2026-06-04/05. Formato de saída comum:
   reais, fecha ΔH com coringa (uniforme nos úteis livres → resto recuando da sexta,
   tampado pelo teto soft → transbordo pro FDS se `aceitaFimDeSemana`). 7 testes
   verdes; teto exercitado com teste real (2 ciclos passaram green-first por
-  construção adiantada no ciclo 2 — lição: código mínimo). 2026-06-05.
+  construção adiantada no ciclo 2 — lição: código mínimo). Commit `0a756c3`. 2026-06-05.
 - **Próxima jogada:** **slice 03** (motor bordas) — semana parcial
   (`cheia`/`proporcional`) + flags de inconsistência. Absorve o que o 02 deixou
   fora de propósito: **transbordo soft puro** (ΔH > capacidade até no FDS → hoje o

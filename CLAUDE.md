@@ -37,6 +37,7 @@ Vercel + uma API de LLM (fornecedor a decidir). TypeScript. Tailwind inline.
   interface estável. Efeito colateral (Supabase, auth, UI) fica nas bordas.
 - **Testes.** Motor e formatador a fundo (TDD); mapeador com LLM mockado;
   persistência/UI fora do unitário. Testar comportamento externo, não
-  implementação.
+  implementação. Runner: `npm test` (vitest), `npm run test:watch` no loop
+  red-green; `npm run typecheck` (tsc) pra checar tipos.
 - **Segurança.** Validar identidade em toda Server Action / Route Handler com
   `supabase.auth.getUser()` — nunca só no middleware (CVE-2025-29927).

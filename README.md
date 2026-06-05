@@ -35,6 +35,7 @@ Next.js (App Router) · Supabase (Postgres + auth) · Vercel · API de LLM.
 
 ## Estado
 
-Implementação iniciada. Idea, research, grill, PRD e o fatiamento em issues
-fechados; **slice 01 (config) feito** — o tipo `ProjetoConfig` e as duas configs
-existem e type-checkam. Próxima etapa: o motor por TDD (slice 02).
+Em implementação, por vertical slices. O estado vivo — slice atual, próxima
+jogada, decisões em curso — é do [`CONTEXT.md`](CONTEXT.md); este README não o
+duplica. Núcleo determinístico (config + motor) já feito e testado; faltam as
+bordas do motor, o LLM, persistência, UI e deploy.
