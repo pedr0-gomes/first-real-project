@@ -1,6 +1,6 @@
 # CONTEXT.md — first-real-project
 
-Última atualização: 2026-06-05
+Última atualização: 2026-06-05 (slice 03 fechado)
 
 ## O que é
 
@@ -69,11 +69,20 @@ CC0002), coladas na sessão de 2026-06-04/05. Formato de saída comum:
   tampado pelo teto soft → transbordo pro FDS se `aceitaFimDeSemana`). 7 testes
   verdes; teto exercitado com teste real (2 ciclos passaram green-first por
   construção adiantada no ciclo 2 — lição: código mínimo). Commit `0a756c3`. 2026-06-05.
-- **Próxima jogada:** **slice 03** (motor bordas) — semana parcial
-  (`cheia`/`proporcional`) + flags de inconsistência. Absorve o que o 02 deixou
-  fora de propósito: **transbordo soft puro** (ΔH > capacidade até no FDS → hoje o
-  resto é descartado e a soma quebra → vira flag). Alternativa: slice 04
-  (formatador). Decisão HITL pendente (provider LLM + SDK) vive no slice 05, não trava.
+- **Slice 03 ✓** — motor bordas (TDD, vitest), `src/motor/`. Alvo por semana
+  (`cheia` → carga; `proporcional` → `round(carga × diasÚteisNoMês / 5)`) + 4 flags
+  na saída (`sem-atividade-real`, `parcial-proporcional`, `acima-do-alvo`,
+  `carga-incompleta`). Fechou o transbordo soft puro do 02: o resto que o coringa
+  não aloca vira flag `carga-incompleta` em vez de sumir. **Decisão nova:** recorte
+  ao mês (`entradas ⊆ mês`) — grade/real/coringa só em dias dentro do mês; o
+  proporcional forçou a encarar as pontas seg-dom que extravasam. Registrado em
+  `docs/adr/0002`. **Lição:** o teto soft não corta a base uniforme do coringa, só
+  o resto derramado (decisão #4 do grill) — meu 1º teste mentia, o motor estava
+  certo. 8 testes novos, 15 verdes no total, typecheck limpo. 2026-06-05.
+- **Próxima jogada:** **slice 04** (formatador) — `Consolidacao` → string no
+  template de cada instituição. Puro, AFK, TDD; assume o invariante `entradas ⊆ mês`
+  do ADR-0002. Motor agora fechado (núcleo 02 + bordas 03). Decisão HITL pendente
+  (provider LLM + SDK) vive no slice 05, não trava.
 - **Transversal ✓** — registrado no sistema global em 2026-06-05: entrada na
   database [Construções](https://www.notion.so/376ab645e3bb81f6935fd72700848367)
   (status ativo) + ponteiro no `CONTEXT.md` global.
