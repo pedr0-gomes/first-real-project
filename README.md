@@ -29,11 +29,12 @@ Next.js (App Router) · Supabase (Postgres + auth) · Vercel · API de LLM.
 
 - [`CONTEXT.md`](CONTEXT.md) — estado atual, decisões, próxima jogada.
 - [`docs/PRD.md`](docs/PRD.md) — especificação do produto.
+- [`docs/issues/`](docs/issues/) — o PRD fatiado em vertical slices (o Kanban do projeto).
 - [`docs/adr/`](docs/adr/) — decisões arquiteturais.
 - [`docs/template/`](docs/template/) — fonte canônica dos dois relatórios.
 
 ## Estado
 
-Pré-implementação. Idea, research, grill e PRD fechados; esqueleto do repositório
-montado. Código ainda não começou — próxima etapa é fatiar o PRD em issues e
-iniciar pelo motor (TDD).
+Pré-implementação. Idea, research, grill, PRD e o fatiamento em issues fechados;
+esqueleto do repositório montado. Código ainda não começou — próxima etapa é
+implementar a config (slice 01) e o motor por TDD (slice 02).

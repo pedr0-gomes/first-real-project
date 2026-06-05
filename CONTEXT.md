@@ -57,11 +57,14 @@ CC0002), coladas na sessão de 2026-06-04/05. Formato de saída comum:
 - **PRD ✓** — `docs/PRD.md` (25 user stories, módulos, testes, escopo). 2026-06-05.
 - **Esqueleto ✓** — git (branch main), `.gitignore`, `CLAUDE.md` local, `README.md`,
   `docs/adr/0001`. Commit inicial `1e17860`. 2026-06-05.
-- **Próxima jogada:** `/to-issues` — fatiar o PRD em vertical slices. Depois
-  implementar começando pelo **motor** (TDD).
-- **Pendência transversal:** rodar `destilar-transversal` para registrar o novo
-  repositório ativo no sistema global / Notion (Construções). Melhor no início da
-  próxima sessão, com contexto fresco.
+- **Kanban ✓** — PRD fatiado em 10 vertical slices core-first em `docs/issues/`
+  (índice + grafo em `docs/issues/README.md`). 2026-06-05.
+- **Próxima jogada:** implementar **slice 01** (config dos projetos) → **slice 02**
+  (motor núcleo, TDD). O motor é o coração dos testes. Decisão HITL pendente
+  (provider LLM + SDK) embutida no slice 05, não trava o começo.
+- **Transversal ✓** — registrado no sistema global em 2026-06-05: entrada na
+  database [Construções](https://www.notion.so/376ab645e3bb81f6935fd72700848367)
+  (status ativo) + ponteiro no `CONTEXT.md` global.
 
 ## Decisões do grill-me (2026-06-05)
 
