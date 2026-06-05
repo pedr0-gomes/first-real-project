@@ -1,6 +1,6 @@
 # CONTEXT.md — first-real-project
 
-Última atualização: 2026-06-05 (slice 03 fechado)
+Última atualização: 2026-06-05 (slice 05 fechado)
 
 ## O que é
 
@@ -79,10 +79,32 @@ CC0002), coladas na sessão de 2026-06-04/05. Formato de saída comum:
   `docs/adr/0002`. **Lição:** o teto soft não corta a base uniforme do coringa, só
   o resto derramado (decisão #4 do grill) — meu 1º teste mentia, o motor estava
   certo. 8 testes novos, 15 verdes no total, typecheck limpo. 2026-06-05.
-- **Próxima jogada:** **slice 04** (formatador) — `Consolidacao` → string no
-  template de cada instituição. Puro, AFK, TDD; assume o invariante `entradas ⊆ mês`
-  do ADR-0002. Motor agora fechado (núcleo 02 + bordas 03). Decisão HITL pendente
-  (provider LLM + SDK) vive no slice 05, não trava.
+- **Slice 04 ✓** — formatador (TDD, vitest), `src/formatador/`. `formatar(consolidacao,
+  config)` puro: `Consolidacao` → string no template exato. Cabeçalho `Relatório de
+  Frequência — {nome} — {mês}/{ano}` + linha por semana (romano, `DD/MM`, `; `, `.`
+  final). Descrição resolvida por `origem` (coringa → `atividadeCoringa`; grade/real →
+  `vocabulario[cat].descricaoOficial`); **ordena entradas por data** (o motor empurra
+  grade→real→coringa, não ordena). **Decisões:** cabeçalho incluído; horas com vírgula
+  pt-BR (`1,5h`, inteiros sem decimal); flags fora da string (vivem na `Consolidacao`
+  pra UI). Golden test por instituição batendo letra a letra com `docs/template/`.
+  4 testes, 19 verdes. Commit `e17e1a2`. 2026-06-05.
+- **Slice 05 ✓** — mapeador semântico (TDD, LLM mockado), `src/mapeador/`. `mapear(texto,
+  config, cliente)` → `ResultadoMapeamento { atividades, descartes }`. **Fronteira LLM
+  cravada (lei central):** `ClienteLLM = (prompt) => Promise<string>` ("boundary crua") —
+  único ponto de LLM, injetável; prompt + parse + validação ficam DENTRO da unidade
+  testada, só a chamada real depende do provider. Saída **sem data** (a data é atribuída
+  na confirmação) + `fonteHoras: 'texto' | 'default'`. Regras nossas testadas: parse JSON,
+  múltiplas atividades/frase, fallback default de horas, Instagram → `descartes`, categoria
+  fora do vocabulário ignorada (não inventa). 5 testes, 24 verdes, typecheck limpo.
+  **Pendências honestas:** (1) decisão HITL provider+SDK (Claude `haiku` vs OpenAI
+  `gpt-4o-mini`; SDK direta vs Vercel AI SDK) — não trava, liga junto da chamada real/UI;
+  critério: modelo pequeno por custo. (2) parse mínimo de propósito (sem tratar cercas
+  markdown ` ```json `) — endurecer com o adaptador real. 2026-06-05.
+- **Próxima jogada:** **slice 06** (persistência Supabase + RLS) — primeira borda de infra;
+  o projeto sai do TS puro. Parte pura/AFK fechada (config 01 + motor 02/03 + formatador 04
+  + mapeador 05, 24 testes). Só atividades reais viram linha (grade/coringa são derivados de
+  config/motor). Validar identidade em toda Server Action com `supabase.auth.getUser()`
+  (CVE-2025-29927). Decisão HITL de provider LLM segue pendente, liga no slice de UI/captura.
 - **Transversal ✓** — registrado no sistema global em 2026-06-05: entrada na
   database [Construções](https://www.notion.so/376ab645e3bb81f6935fd72700848367)
   (status ativo) + ponteiro no `CONTEXT.md` global.

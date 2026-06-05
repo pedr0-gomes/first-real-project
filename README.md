@@ -37,5 +37,5 @@ Next.js (App Router) · Supabase (Postgres + auth) · Vercel · API de LLM.
 
 Em implementação, por vertical slices. O estado vivo — slice atual, próxima
 jogada, decisões em curso — é do [`CONTEXT.md`](CONTEXT.md); este README não o
-duplica. Motor determinístico completo e testado (config + núcleo + bordas);
-faltam o formatador, o LLM, persistência, UI e deploy.
+duplica. Núcleo puro completo e testado (config + motor + formatador + mapeador
+com LLM mockado); faltam persistência, auth, UI e deploy.
