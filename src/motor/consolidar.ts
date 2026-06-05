@@ -3,6 +3,7 @@ import type {
   AtividadeReal,
   Consolidacao,
   EntradaSemana,
+  FlagSemana,
   SemanaConsolidada,
 } from './types.js';
 
@@ -45,6 +46,7 @@ export function consolidar(
 ): Consolidacao {
   const primeiroDoMes = Date.UTC(mes.ano, mes.mes - 1, 1);
   const ultimoDoMes = Date.UTC(mes.ano, mes.mes, 0);
+  const dentroDoMes = (ms: number) => ms >= primeiroDoMes && ms <= ultimoDoMes;
 
   // Segunda-feira na ou antes do dia 1 (início da I SEMANA).
   const diaSemana = new Date(primeiroDoMes).getUTCDay(); // 0=dom..6=sáb
@@ -59,33 +61,58 @@ export function consolidar(
   ) {
     const fim = inicio + 6 * UM_DIA;
 
+    // Dias úteis (seg–sex) desta semana que caem DENTRO do mês. Define o alvo
+    // proporcional e o universo onde o coringa pode pousar (o relatório mensal
+    // não invade dias do mês vizinho — esses pertencem ao outro relatório).
+    const diasUteisNoMes = [0, 1, 2, 3, 4].filter((i) =>
+      dentroDoMes(inicio + i * UM_DIA),
+    ).length;
+    const alvoHoras =
+      config.semanaParcial === 'proporcional'
+        ? Math.round((config.cargaSemanal * diasUteisNoMes) / 5)
+        : config.cargaSemanal;
+
     // Horas reais da semana: grade fixa expandida + atividades capturadas.
-    const entradas: EntradaSemana[] = config.gradeSemanal.map((item) => ({
-      data: iso(inicio + OFFSET_DESDE_SEGUNDA[item.dia] * UM_DIA),
-      categoria: item.categoria,
-      horas: item.horas,
-      origem: 'grade',
-    }));
+    // Ambas restritas aos dias do mês (entradas ⊆ mês).
+    const entradas: EntradaSemana[] = [];
+    for (const item of config.gradeSemanal) {
+      const ms = inicio + OFFSET_DESDE_SEGUNDA[item.dia] * UM_DIA;
+      if (dentroDoMes(ms)) {
+        entradas.push({ data: iso(ms), categoria: item.categoria, horas: item.horas, origem: 'grade' });
+      }
+    }
     for (const a of atividades) {
       const ms = parseIso(a.data);
-      if (ms >= inicio && ms <= fim) {
+      if (ms >= inicio && ms <= fim && dentroDoMes(ms)) {
         entradas.push({ ...a, origem: 'real' });
       }
     }
 
     const reais = entradas.reduce((soma, e) => soma + e.horas, 0);
-    const deltaH = config.cargaSemanal - reais;
+    const deltaH = alvoHoras - reais;
     if (deltaH > 0) {
-      preencherCoringa(entradas, inicio, deltaH, config);
+      preencherCoringa(entradas, inicio, deltaH, config, dentroDoMes);
     }
 
-    semanas.push({
-      indice,
-      inicio: iso(inicio),
-      fim: iso(fim),
-      entradas,
-      totalHoras: entradas.reduce((soma, e) => soma + e.horas, 0),
-    });
+    const totalHoras = entradas.reduce((soma, e) => soma + e.horas, 0);
+
+    const flags: FlagSemana[] = [];
+    if (!entradas.some((e) => e.origem === 'real')) {
+      flags.push({ tipo: 'sem-atividade-real' });
+    }
+    if (config.semanaParcial === 'proporcional' && diasUteisNoMes < 5) {
+      flags.push({ tipo: 'parcial-proporcional' });
+    }
+    if (reais > alvoHoras) {
+      // Carga real acima do alvo: só alerta, atividade real fica intacta.
+      flags.push({ tipo: 'acima-do-alvo', alvo: alvoHoras, real: reais });
+    } else if (totalHoras < alvoHoras) {
+      // Coringa saturou (teto/dias) e não fechou o alvo — em vez de descartar o
+      // resto em silêncio (e quebrar a soma), sinaliza o quanto faltou.
+      flags.push({ tipo: 'carga-incompleta', faltam: alvoHoras - totalHoras });
+    }
+
+    semanas.push({ indice, inicio: iso(inicio), fim: iso(fim), entradas, alvoHoras, totalHoras, flags });
   }
 
   return { projeto: config.id, mes, semanas };
@@ -102,17 +129,18 @@ function preencherCoringa(
   inicioSemana: number,
   deltaH: number,
   config: ProjetoConfig,
+  dentroDoMes: (ms: number) => boolean,
 ): void {
   const ocupados = new Set(entradas.map((e) => e.data));
   const teto = config.tetoHorasDiaCoringa;
   const distribuido: { ms: number; horas: number }[] = [];
 
-  // Fase 1 — dias úteis livres (seg–sex): base uniforme + resto derramado da
-  // sexta recuando, cada dia tampado pelo teto soft.
+  // Fase 1 — dias úteis livres (seg–sex) DENTRO do mês: base uniforme + resto
+  // derramado da sexta recuando, cada dia tampado pelo teto soft.
   const uteis: number[] = [];
   for (let i = 0; i < 5; i++) {
     const ms = inicioSemana + i * UM_DIA;
-    if (!ocupados.has(iso(ms))) uteis.push(ms);
+    if (dentroDoMes(ms) && !ocupados.has(iso(ms))) uteis.push(ms);
   }
 
   let resto = deltaH;
@@ -135,7 +163,7 @@ function preencherCoringa(
   if (resto > 0 && config.aceitaFimDeSemana) {
     for (let i = 5; i < 7 && resto > 0; i++) {
       const ms = inicioSemana + i * UM_DIA;
-      if (ocupados.has(iso(ms))) continue;
+      if (!dentroDoMes(ms) || ocupados.has(iso(ms))) continue;
       const add = Math.min(teto, resto);
       distribuido.push({ ms, horas: add });
       resto -= add;

@@ -19,6 +19,21 @@ export interface EntradaSemana {
   origem: 'real' | 'grade' | 'coringa';
 }
 
+/**
+ * Inconsistência sinalizada pelo motor para revisão humana antes do envio.
+ * Dado na saída (consumível pela UI). União discriminada por `tipo`: cada caso
+ * carrega o que a UI precisa mostrar. O motor sinaliza, nunca corrige sozinho.
+ */
+export type FlagSemana =
+  /** Semana sem nenhuma atividade real capturada (só grade/coringa). */
+  | { tipo: 'sem-atividade-real' }
+  /** Semana parcial fechada por proporção — revisar à mão (monitoria). */
+  | { tipo: 'parcial-proporcional' }
+  /** Horas reais acima do alvo. Só alerta: atividade real fica intacta. */
+  | { tipo: 'acima-do-alvo'; alvo: number; real: number }
+  /** Coringa saturou (teto/dias) e não fechou o alvo. Quanto faltou. */
+  | { tipo: 'carga-incompleta'; faltam: number };
+
 export interface SemanaConsolidada {
   /** 1-based → "I SEMANA", "II SEMANA"... */
   indice: number;
@@ -27,8 +42,12 @@ export interface SemanaConsolidada {
   /** Domingo da semana ('YYYY-MM-DD'); pode cair no mês vizinho. */
   fim: string;
   entradas: EntradaSemana[];
-  /** Invariante (semana cheia): === config.cargaSemanal. */
+  /** Carga-alvo da semana: cheia → cargaSemanal; proporcional → ∝ dias no mês. */
+  alvoHoras: number;
+  /** Soma das entradas. Invariante (sem flag): === alvoHoras. */
   totalHoras: number;
+  /** Inconsistências para revisão humana. Vazio = semana limpa. */
+  flags: FlagSemana[];
 }
 
 export interface Consolidacao {
