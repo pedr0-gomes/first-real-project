@@ -54,8 +54,14 @@ CC0002), coladas na sessão de 2026-06-04/05. Formato de saída comum:
 - **Research ✓** — `.claude/research/primeiro-produto-web.md`.
 - **Grill ✓** — 5 branches + 2 decisões novas fechados (ver "Decisões do
   grill-me"). 2026-06-05.
-- **Próxima jogada:** `/to-prd` partindo das decisões acima → `docs/PRD.md`.
-  Pendência de infra (git, CLAUDE.md local, docs/adr/) ainda aberta — ver baixo.
+- **PRD ✓** — `docs/PRD.md` (25 user stories, módulos, testes, escopo). 2026-06-05.
+- **Esqueleto ✓** — git (branch main), `.gitignore`, `CLAUDE.md` local, `README.md`,
+  `docs/adr/0001`. Commit inicial `1e17860`. 2026-06-05.
+- **Próxima jogada:** `/to-issues` — fatiar o PRD em vertical slices. Depois
+  implementar começando pelo **motor** (TDD).
+- **Pendência transversal:** rodar `destilar-transversal` para registrar o novo
+  repositório ativo no sistema global / Notion (Construções). Melhor no início da
+  próxima sessão, com contexto fresco.
 
 ## Decisões do grill-me (2026-06-05)
 
@@ -109,6 +115,6 @@ mock; persistência/UI fora do unitário.
 
 ## Pendências de infra
 
-- **Sem git nem issue tracker.** `to-prd`/`to-issues` assumem ambos. Decidido:
-  PRD será salvo como `docs/PRD.md`. Falta o esqueleto do projeto (git init,
-  CLAUDE.md local, docs/adr/) antes da esteira girar de verdade.
+- **Git ✓, esqueleto ✓** (commit `1e17860`). **Sem issue tracker** — decidido:
+  PRD em `docs/PRD.md`; o `/to-issues` salvará as issues como arquivos, não em
+  tracker externo.
