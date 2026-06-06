@@ -23,7 +23,7 @@ config, não recodar.
 
 ## Stack
 
-Next.js (App Router) · Supabase (Postgres + auth) · Vercel · API de LLM.
+Next.js (App Router) · Supabase (Postgres + auth) · Vercel · Gemini 2.5-flash.
 
 ## Documentos
 
@@ -35,10 +35,12 @@ Next.js (App Router) · Supabase (Postgres + auth) · Vercel · API de LLM.
 
 ## Estado
 
-Em implementação, por vertical slices. O estado vivo — slice atual, próxima
-jogada, decisões em curso — é do [`CONTEXT.md`](CONTEXT.md); este README não o
-duplica. Núcleo puro completo e testado (config + motor + formatador + mapeador
-com LLM mockado); persistência, auth, captura manual e geração no ar. **O app
-está online na Vercel** — o caminho determinístico (registrar atividade → gerar
-relatório) já atinge o critério de pronto: online, funciona, Pedro usa. Falta só
-a captura por texto livre (LLM), comodidade sobre o que já roda.
+**No ar e completo.** Os 10 vertical slices estão em produção na Vercel e
+exercitados ponta a ponta: núcleo puro testado (config + motor + formatador +
+mapeador), persistência e auth no Supabase, captura manual **e por texto livre
+(LLM)**, e geração do relatório. O critério de pronto foi atingido — online,
+funciona, Pedro usa de verdade, no ritmo **capturar 1x/semana → gerar no fim do
+mês**.
+
+O estado vivo — próxima jogada, decisões em curso, escopo adiado — é do
+[`CONTEXT.md`](CONTEXT.md); este README não o duplica.
