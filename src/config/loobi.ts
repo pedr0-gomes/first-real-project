@@ -9,22 +9,19 @@ export const loobi: ProjetoConfig = {
 
   vocabulario: {
     Blog: {
-      descricaoOficial:
-        'Produção e publicação de conteúdo para o blog do projeto LoOBI',
+      descricaoOficial: 'Produção de conteúdo para o blog',
     },
     Podcast: {
-      descricaoOficial:
-        'Gravação, edição ou planejamento de episódio de podcast do projeto LoOBI',
+      descricaoOficial: 'Produção de episódio do podcast',
     },
     Reunião: {
-      descricaoOficial: 'Participação em reunião do grupo de extensão LoOBI',
+      descricaoOficial: 'Reunião do grupo de extensão',
     },
     Pesquisa: {
-      descricaoOficial:
-        'Pesquisa e levantamento de referências para as atividades do projeto LoOBI',
+      descricaoOficial: 'Levantamento de referências para as atividades',
     },
     Outros: {
-      descricaoOficial: 'Atividade de apoio ao projeto LoOBI — [descrever brevemente]',
+      descricaoOficial: 'Atividade de apoio às ações do projeto',
     },
     // Reconhecida na captura para não virar "Outros", mas nunca vai ao relatório:
     // o motor compensa as horas com o coringa.
@@ -47,7 +44,7 @@ export const loobi: ProjetoConfig = {
     Outros: 1,
   },
 
-  atividadeCoringa: 'Estudo e planejamento de atividades do projeto LoOBI',
+  atividadeCoringa: 'Estudo e planejamento de atividades',
   semanaParcial: 'cheia',
   tetoHorasDiaCoringa: 4, // valor de bom senso — a confirmar com Pedro
   aceitaFimDeSemana: false,

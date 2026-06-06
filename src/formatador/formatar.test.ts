@@ -32,10 +32,10 @@ describe('formatar', () => {
 
     const esperado =
       'Relatório de Frequência — LoOBI — maio/2026\n\n' +
-      'I SEMANA: 04/05 - Participação em reunião do grupo de extensão LoOBI - 1h; ' +
-      '05/05 - Produção e publicação de conteúdo para o blog do projeto LoOBI - 2h; ' +
-      '06/05 - Estudo e planejamento de atividades do projeto LoOBI - 3h; ' +
-      '07/05 - Estudo e planejamento de atividades do projeto LoOBI - 2h.';
+      'I SEMANA: 04/05 - Reunião do grupo de extensão - 1h; ' +
+      '05/05 - Produção de conteúdo para o blog - 2h; ' +
+      '06/05 - Estudo e planejamento de atividades - 3h; ' +
+      '07/05 - Estudo e planejamento de atividades - 2h.';
 
     expect(formatar(consolidacao, loobi)).toBe(esperado);
   });
@@ -103,8 +103,8 @@ describe('formatar', () => {
 
     const esperado =
       'Relatório de Frequência — LoOBI — maio/2026\n\n' +
-      'I SEMANA: 04/05 - Participação em reunião do grupo de extensão LoOBI - 1,5h.\n' +
-      'II SEMANA: 11/05 - Produção e publicação de conteúdo para o blog do projeto LoOBI - 2h.';
+      'I SEMANA: 04/05 - Reunião do grupo de extensão - 1,5h.\n' +
+      'II SEMANA: 11/05 - Produção de conteúdo para o blog - 2h.';
 
     expect(formatar(consolidacao, loobi)).toBe(esperado);
   });

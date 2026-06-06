@@ -136,7 +136,7 @@ converte em "Outros"). Prompt enxuto: só o vocabulário do projeto + o texto.
 - `defaultHorasPorCategoria` — fallback quando o texto não informa horas
 - `atividadeCoringa` — descrição oficial do preenchimento
   (monitoria: "Estudo e aplicação de método e técnicas de ensino/aprendizagem";
-  LoOBI: "Estudo e planejamento de atividades do projeto LoOBI")
+  LoOBI: "Estudo e planejamento de atividades")
 - `semanaParcial: 'cheia' | 'proporcional'`
 - `tetoHorasDiaCoringa: number`
 - `aceitaFimDeSemana: boolean`

@@ -41,19 +41,22 @@ IV SEMANA: ...
 
 Use estas descrições ao redigir cada entrada:
 
-| Categoria (Notion) | Descrição no relatório                                                        |
-|--------------------|-------------------------------------------------------------------------------|
-| Blog               | Produção e publicação de conteúdo para o blog do projeto LoOBI                |
-| Podcast            | Gravação, edição ou planejamento de episódio de podcast do projeto LoOBI      |
-| Reunião            | Participação em reunião do grupo de extensão LoOBI                            |
-| Pesquisa           | Pesquisa e levantamento de referências para as atividades do projeto LoOBI    |
-| Outros             | Atividade de apoio ao projeto LoOBI — [descrever brevemente]                  |
+| Categoria (Notion) | Descrição no relatório                          |
+|--------------------|-------------------------------------------------|
+| Blog               | Produção de conteúdo para o blog                |
+| Podcast            | Produção de episódio do podcast                 |
+| Reunião            | Reunião do grupo de extensão                    |
+| Pesquisa           | Levantamento de referências para as atividades  |
+| Outros             | Atividade de apoio às ações do projeto          |
+
+O nome do projeto vive no cabeçalho do relatório, não em cada linha: descrições
+enxutas e impessoais, sem repetir "LoOBI" nem usar nominalizações de ata.
 
 **Restrição obrigatória:** entradas com categoria **Instagram** não devem aparecer no relatório.
-Se o registro no Notion for de categoria Instagram, descarte-o completamente — não converta para outra categoria, não mencione. Compense as horas que seriam dele com "Estudo e planejamento de atividades do projeto LoOBI".
+Se o registro no Notion for de categoria Instagram, descarte-o completamente — não converta para outra categoria, não mencione. Compense as horas que seriam dele com "Estudo e planejamento de atividades".
 
 O complemento padrão para fechar 8h quando não há registro suficiente:
-> **"Estudo e planejamento de atividades do projeto LoOBI"**
+> **"Estudo e planejamento de atividades"**
 
 ---
 
@@ -105,7 +108,7 @@ Para cada resultado, use `notion-fetch` para obter os campos: `Atividade`, `Cate
 Para cada semana do mês:
 
 1. Some as horas das atividades encontradas no Notion + Calendar naquela semana.
-2. Se a soma for menor que 8h, complete com entradas de **"Estudo e planejamento de atividades do projeto LoOBI"** nos dias úteis restantes da semana, até atingir exatamente 8h.
+2. Se a soma for menor que 8h, complete com entradas de **"Estudo e planejamento de atividades"** nos dias úteis restantes da semana, até atingir exatamente 8h.
 3. Se a soma for maior que 8h, registre o total real — não corte atividades legítimas.
 4. Semanas parciais (início ou fim de mês): fechar 8h normalmente, completando com estudo/planejamento nos dias disponíveis dentro do mês.
 
@@ -118,7 +121,7 @@ Apresente o relatório completo diretamente no chat, em bloco de código para fa
 ```
 Relatório de Frequência — LoOBI — [Mês/Ano]
 
-I SEMANA: 04/05 - Participação em reunião do grupo de extensão LoOBI - 1h; 05/05 - Produção e publicação de conteúdo para o blog do projeto LoOBI - 2h; 06/05 - Estudo e planejamento de atividades do projeto LoOBI - 3h; 07/05 - Estudo e planejamento de atividades do projeto LoOBI - 2h.
+I SEMANA: 04/05 - Reunião do grupo de extensão - 1h; 05/05 - Produção de conteúdo para o blog - 2h; 06/05 - Estudo e planejamento de atividades - 3h; 07/05 - Estudo e planejamento de atividades - 2h.
 II SEMANA: ...
 ```
 
@@ -129,6 +132,6 @@ Após exibir, pergunte se Pedro quer ajustar alguma coisa. Se sim, aplique e exi
 ## Regras gerais
 
 - Nunca inventar atividades — apenas o que está no Notion, no Calendar, ou o que Pedro informar explicitamente
-- O complemento com "Estudo e planejamento de atividades do projeto LoOBI" é o único preenchimento permitido para completar as 8h quando não há registro
+- O complemento com "Estudo e planejamento de atividades" é o único preenchimento permitido para completar as 8h quando não há registro
 - Se uma semana ficar visivelmente inconsistente (ex: 0 atividades no Notion + 0 no Calendar), sinalize para Pedro antes de preencher automaticamente
 - Sempre exibir o relatório completo no chat — não criar rascunhos no Gmail nem enviar e-mails
