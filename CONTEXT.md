@@ -239,9 +239,3 @@ mock; persistência/UI fora do unitário.
 - **Git ✓, esqueleto ✓** (commit `1e17860`). **Sem issue tracker** — decidido:
   PRD em `docs/PRD.md`; o `/to-issues` salvará as issues como arquivos, não em
   tracker externo.
-- **Dívida — rotacionar `GEMINI_API_KEY` (2026-06-06).** O valor da chave apareceu
-  em texto puro no chat (seleção do `.env.local`) → tratada como comprometida.
-  Risco baixo (free tier, sem cartão; pior caso é queimar a cota grátis), por isso
-  não-urgente. Quando voltar à Vercel por outro motivo: gerar nova no Google AI
-  Studio → trocar no `.env.local` + Vercel → redeploy → só então apagar a antiga.
-  Hábito firmado: nunca colar chave no chat.
