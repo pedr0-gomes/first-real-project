@@ -22,7 +22,8 @@ Uma coisa por vez.
 ## Stack
 
 Next.js (App Router, React Server Components) + Supabase (Postgres + auth) +
-Vercel + uma API de LLM (fornecedor a decidir). TypeScript. Tailwind inline.
+Vercel + Gemini `2.5-flash` (free tier, SDK `@google/genai`). TypeScript.
+Tailwind inline.
 
 ## Padrões inegociáveis
 

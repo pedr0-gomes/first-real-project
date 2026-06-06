@@ -1,6 +1,6 @@
 # CONTEXT.md — first-real-project
 
-Última atualização: 2026-06-06 (vocabulário dos relatórios reescrito — impessoal/enxuto, padrão de linguagem cravado no CLAUDE.md; slice 10 ✓ — app no ar)
+Última atualização: 2026-06-06 (slice 08 fatia mínima ✓ — captura por texto livre via Gemini 2.5-flash, verificado local + commitado `7efa691`; falta só deploy: `GEMINI_API_KEY` na Vercel + push)
 
 ## O que é
 
@@ -28,8 +28,8 @@ poluem contexto. O produto externaliza isso.
   de captura. **Calendar e Notion cortados** (as skills atuais liam de lá): os
   horários fixos viram `gradeSemanal` na config; o resto entra por texto livre.
 
-**Stack:** Next.js (App Router) + Supabase (Postgres + auth) + Vercel + API de
-LLM (Claude ou OpenAI — não decidido).
+**Stack:** Next.js (App Router) + Supabase (Postgres + auth) + Vercel + Gemini
+`2.5-flash` (free tier, SDK `@google/genai`).
 
 ## Spec dos templates (as duas instituições)
 
@@ -154,13 +154,27 @@ CC0002), coladas na sessão de 2026-06-04/05. Formato de saída comum:
   monitoria. Aplicado em config + template + golden + PRD, 24 testes verdes, no ar
   na Vercel. Virou **padrão inegociável** no `CLAUDE.md` local ("Linguagem dos
   relatórios").
-- **Próxima jogada:** **captura por texto livre / LLM (slice 08)** — única peça que falta,
-  pura comodidade sobre o caminho determinístico que já roda em produção. Decisão de provider
-  pendente (Claude `haiku` vs OpenAI `gpt-4o-mini`; SDK direta vs Vercel AI SDK; critério:
-  modelo pequeno por custo) + ligar a chamada real no `ClienteLLM` + tela de confirmação.
-  **Pré-requisito de runtime:** `.env.local` com URL + publishable key + `SUPABASE_SECRET_KEY`
-  (só pro atalho de dev); ao fazer o 08, somar a env var do provider LLM no `.env.local` **e na
-  Vercel**.
+- **Captura por texto livre (slice 08, fatia mínima) ✓** — última peça do produto, comodidade
+  sobre o caminho determinístico. **Decisão de provider:** Gemini `2.5-flash` (free tier, JSON
+  mode) — **descartados** OpenAI/Claude por exigirem crédito pré-pago (o critério virou custo
+  ZERO, não "desprezível"); SDK direta `@google/genai`. Adaptador real do `ClienteLLM` em
+  `src/lib/llm/gemini.ts` (única borda que conhece o provider; o `mapeador` puro segue intocado,
+  recebendo o cliente injetado). Fluxo `/captura` server-rendered (sem componente client): texto
+  livre → `mapear` → confirmação (`/captura/confirmar`) com horas editáveis + aviso de descarte →
+  salva **só atividades reais** (`textoBruto` guardado junto). Dados extração→confirmação por
+  base64 na URL; nada vai ao banco antes de confirmar. **Verificado ponta a ponta** (local):
+  Podcast extrai 2h do texto, Reunião cai no default da config, Instagram descartado, salvou em
+  `/atividades`. Commit `7efa691`. **Lição (smoke test da conexão):** `gemini-2.0-flash` com cota
+  grátis **zerada** nesta conta; `2.5-flash-lite` devolve horas como **string** (`"2h"`) →
+  quebraria o motor; `2.5-flash` devolve número. **Conta:** chave criada com Gmail **pessoal** — a
+  conta da UFCA (Workspace) bloqueia criar projeto no Google Cloud.
+- **Ficou pra depois (slice 08 completo):** grade fixa pré-preenchida na semana + editar/cancelar
+  item fixo na mão. A fatia mínima entrega o atalho de digitação; o resto é UI, não LLM.
+- **Próxima jogada:** **concluir o slice 08 = deploy.** (1) Adicionar `GEMINI_API_KEY` nas env
+  vars da **Vercel** (Settings → Environment Variables) — sem isso a `/captura` quebra em produção.
+  (2) `git push` → deploy automático. **Só então** o slice 08 está no ar. **Pré-requisito de
+  runtime local:** `.env.local` com URL + publishable key + `SUPABASE_SECRET_KEY` (atalho de dev) +
+  `GEMINI_API_KEY` (já adicionada local).
 - **Transversal ✓** — registrado no sistema global em 2026-06-05: entrada na
   database [Construções](https://www.notion.so/376ab645e3bb81f6935fd72700848367)
   (status ativo) + ponteiro no `CONTEXT.md` global.
