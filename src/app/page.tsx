@@ -16,7 +16,9 @@ export default async function Home() {
       <h1>Relatórios de Frequência</h1>
       <p>Logado como {user.email}.</p>
       <p>
-        <Link href="/atividades">Capturar atividades →</Link>
+        <Link href="/captura">Captura por texto livre →</Link>
+        {' · '}
+        <Link href="/atividades">Entrada manual →</Link>
       </p>
       <form action={sair}>
         <button type="submit" style={{ padding: '0.4rem 0.8rem', cursor: 'pointer' }}>
