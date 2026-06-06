@@ -41,15 +41,19 @@ IV SEMANA: ...
 
 Use estas descrições — ou adaptações próximas — ao redigir cada entrada:
 
-| Categoria (Notion)   | Descrição no relatório                                                      |
-|----------------------|-----------------------------------------------------------------------------|
-| Plantão              | Atendimento individualizado ou em pequenos grupos na sala de monitoria      |
-| Reunião              | Participação em reunião com o orientador relativas ao programa de monitoria |
-| Material de Apoio    | Estudo e aplicação de método e técnicas de ensino/aprendizagem              |
-| Lista Comentada      | Elaboração de lista comentada de exercícios para os alunos                  |
-| Videoaula            | Elaboração de material audiovisual de apoio às aulas                        |
-| Classroom            | Organização e postagem de materiais no ambiente virtual da disciplina        |
-| Outros               | Atividade de apoio à monitoria — [descrever brevemente]                     |
+| Categoria (Notion)   | Descrição no relatório                                          |
+|----------------------|----------------------------------------------------------------|
+| Plantão              | Atendimento individualizado ou em pequenos grupos              |
+| Reunião              | Reunião com o orientador                                        |
+| Material de Apoio    | Estudo e aplicação de método e técnicas de ensino/aprendizagem |
+| Lista Comentada      | Lista comentada de exercícios para os alunos                   |
+| Videoaula            | Material audiovisual de apoio às aulas                          |
+| Classroom            | Organização de materiais no ambiente virtual da disciplina     |
+| Outros               | Atividade de apoio à disciplina                                 |
+
+O nome da disciplina vive no cabeçalho do relatório, não em cada linha: descrições
+enxutas e impessoais, sem repetir "monitoria" nem usar nominalizações de ata.
+"Material de Apoio" e o coringa são mantidos no termo literal do edital.
 
 ---
 
@@ -117,7 +121,7 @@ Apresente o relatório completo diretamente no chat, em bloco de código para fa
 ```
 Relatório de Frequência — Monitoria CC0002 — [Mês/Ano]
 
-I SEMANA: 05/05 - Atendimento individualizado ou em pequenos grupos na sala de monitoria - 2h; 06/05 - Estudo e aplicação de método e técnicas de ensino/aprendizagem - 4h; 07/05 - Atendimento individualizado ou em pequenos grupos na sala de monitoria - 2h; 08/05 - Estudo e aplicação de método e técnicas de ensino/aprendizagem - 4h.
+I SEMANA: 05/05 - Atendimento individualizado ou em pequenos grupos - 2h; 06/05 - Estudo e aplicação de método e técnicas de ensino/aprendizagem - 4h; 07/05 - Atendimento individualizado ou em pequenos grupos - 2h; 08/05 - Estudo e aplicação de método e técnicas de ensino/aprendizagem - 4h.
 II SEMANA: ...
 ```
 

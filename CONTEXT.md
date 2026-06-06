@@ -1,6 +1,6 @@
 # CONTEXT.md — first-real-project
 
-Última atualização: 2026-06-06 (slice 10 ✓ — app no ar na Vercel, login e relatório real verificados em produção; produto atinge o sinal de pronto)
+Última atualização: 2026-06-06 (vocabulário dos relatórios reescrito — impessoal/enxuto, padrão de linguagem cravado no CLAUDE.md; slice 10 ✓ — app no ar)
 
 ## O que é
 
@@ -146,6 +146,14 @@ CC0002), coladas na sessão de 2026-06-04/05. Formato de saída comum:
   vez, no mesmo browser** que o pediu (aba anônima separada perde o cookie do `code_verifier`
   PKCE). **Dívida anotada:** Next 16 deprecou `middleware` → renomear pra `proxy` (warning no
   build, não bloqueia). **Produto atinge o sinal de pronto: online, funciona, Pedro usa.**
+- **Qualidade do output (pós-deploy) ✓** — 1º teste funcional do relatório real
+  expôs vocabulário repetitivo e nominalizado (herdado das skills antigas; os
+  testes unitários só checavam config↔golden, não a *qualidade* da frase).
+  Vocabulário de LoOBI e CC0002 reescrito impessoal/enxuto, sem repetir o nome
+  (vive no cabeçalho), sem placeholder vazando; termos de edital mantidos na
+  monitoria. Aplicado em config + template + golden + PRD, 24 testes verdes, no ar
+  na Vercel. Virou **padrão inegociável** no `CLAUDE.md` local ("Linguagem dos
+  relatórios").
 - **Próxima jogada:** **captura por texto livre / LLM (slice 08)** — única peça que falta,
   pura comodidade sobre o caminho determinístico que já roda em produção. Decisão de provider
   pendente (Claude `haiku` vs OpenAI `gpt-4o-mini`; SDK direta vs Vercel AI SDK; critério:

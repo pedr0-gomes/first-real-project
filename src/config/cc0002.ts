@@ -9,29 +9,26 @@ export const cc0002: ProjetoConfig = {
 
   vocabulario: {
     Plantão: {
-      descricaoOficial:
-        'Atendimento individualizado ou em pequenos grupos na sala de monitoria',
+      descricaoOficial: 'Atendimento individualizado ou em pequenos grupos',
     },
     Reunião: {
-      descricaoOficial:
-        'Participação em reunião com o orientador relativas ao programa de monitoria',
+      descricaoOficial: 'Reunião com o orientador',
     },
     'Material de Apoio': {
       descricaoOficial:
         'Estudo e aplicação de método e técnicas de ensino/aprendizagem',
     },
     'Lista Comentada': {
-      descricaoOficial: 'Elaboração de lista comentada de exercícios para os alunos',
+      descricaoOficial: 'Lista comentada de exercícios para os alunos',
     },
     Videoaula: {
-      descricaoOficial: 'Elaboração de material audiovisual de apoio às aulas',
+      descricaoOficial: 'Material audiovisual de apoio às aulas',
     },
     Classroom: {
-      descricaoOficial:
-        'Organização e postagem de materiais no ambiente virtual da disciplina',
+      descricaoOficial: 'Organização de materiais no ambiente virtual da disciplina',
     },
     Outros: {
-      descricaoOficial: 'Atividade de apoio à monitoria — [descrever brevemente]',
+      descricaoOficial: 'Atividade de apoio à disciplina',
     },
   },
 

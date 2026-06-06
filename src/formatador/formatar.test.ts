@@ -66,9 +66,9 @@ describe('formatar', () => {
 
     const esperado =
       'Relatório de Frequência — Monitoria CC0002 — maio/2026\n\n' +
-      'I SEMANA: 05/05 - Atendimento individualizado ou em pequenos grupos na sala de monitoria - 2h; ' +
+      'I SEMANA: 05/05 - Atendimento individualizado ou em pequenos grupos - 2h; ' +
       '06/05 - Estudo e aplicação de método e técnicas de ensino/aprendizagem - 4h; ' +
-      '07/05 - Atendimento individualizado ou em pequenos grupos na sala de monitoria - 2h; ' +
+      '07/05 - Atendimento individualizado ou em pequenos grupos - 2h; ' +
       '08/05 - Estudo e aplicação de método e técnicas de ensino/aprendizagem - 4h.';
 
     expect(formatar(consolidacao, cc0002)).toBe(esperado);

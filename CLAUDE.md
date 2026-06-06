@@ -41,3 +41,10 @@ Vercel + uma API de LLM (fornecedor a decidir). TypeScript. Tailwind inline.
   red-green; `npm run typecheck` (tsc) pra checar tipos.
 - **Segurança.** Validar identidade em toda Server Action / Route Handler com
   `supabase.auth.getUser()` — nunca só no middleware (CVE-2025-29927).
+- **Linguagem dos relatórios.** Descrições do `vocabulario` e do
+  `atividadeCoringa`: impessoais e enxutas, sem repetir o nome do projeto (vive
+  no cabeçalho do relatório) nem nominalizações de ata, sem placeholder no texto
+  final. Exceção: termos literais de edital/norma, mantidos quando a fidelidade
+  importa mais que o estilo (ex.: monitoria CC0002). O motor escolhe categoria e
+  horas; a frase vem pronta da config — variar frase a frase exigiria o LLM
+  inventar texto, o que viola a fronteira central.
