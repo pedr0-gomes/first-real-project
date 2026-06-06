@@ -1,6 +1,6 @@
 # CONTEXT.md — first-real-project
 
-Última atualização: 2026-06-06 (slice 08 fatia mínima ✓ — captura por texto livre via Gemini 2.5-flash, verificado local + commitado `7efa691`; falta só deploy: `GEMINI_API_KEY` na Vercel + push)
+Última atualização: 2026-06-06 (slice 08 fatia mínima ✓ — captura por texto livre via Gemini 2.5-flash, **verificada em produção ponta a ponta**. Produto completo: 10/10 slices no ar.)
 
 ## O que é
 
@@ -170,11 +170,16 @@ CC0002), coladas na sessão de 2026-06-04/05. Formato de saída comum:
   conta da UFCA (Workspace) bloqueia criar projeto no Google Cloud.
 - **Ficou pra depois (slice 08 completo):** grade fixa pré-preenchida na semana + editar/cancelar
   item fixo na mão. A fatia mínima entrega o atalho de digitação; o resto é UI, não LLM.
-- **Próxima jogada:** **concluir o slice 08 = deploy.** (1) Adicionar `GEMINI_API_KEY` nas env
-  vars da **Vercel** (Settings → Environment Variables) — sem isso a `/captura` quebra em produção.
-  (2) `git push` → deploy automático. **Só então** o slice 08 está no ar. **Pré-requisito de
-  runtime local:** `.env.local` com URL + publishable key + `SUPABASE_SECRET_KEY` (atalho de dev) +
-  `GEMINI_API_KEY` (já adicionada local).
+- **Deploy do slice 08 ✓** — `GEMINI_API_KEY` salva na Vercel + `git push`
+  (`8d51041..dd24033`) em 2026-06-06; deploy automático disparado. **Confirmado:** build verde
+  (`/captura` → 307 → `/login`, `/login` → 200) + `/captura` **testada em produção ponta a ponta**
+  (login magic link → texto livre → Gemini extraiu horas + descartou Instagram → salvou em
+  `/atividades`). A `GEMINI_API_KEY` na Vercel está correta — o caminho do LLM em prod fechou.
+  **Pré-requisito de runtime local:** `.env.local` com URL + publishable key + `SUPABASE_SECRET_KEY`
+  (atalho de dev) + `GEMINI_API_KEY`.
+- **Produto completo ✓** — todos os 10 slices no ar e exercitados em produção. Daí em diante é uso
+  real + (se quiser) o slice 08 completo (grade fixa pré-preenchida + editar/cancelar item na mão)
+  e a dívida da chave abaixo.
 - **Transversal ✓** — registrado no sistema global em 2026-06-05: entrada na
   database [Construções](https://www.notion.so/376ab645e3bb81f6935fd72700848367)
   (status ativo) + ponteiro no `CONTEXT.md` global.
@@ -234,3 +239,9 @@ mock; persistência/UI fora do unitário.
 - **Git ✓, esqueleto ✓** (commit `1e17860`). **Sem issue tracker** — decidido:
   PRD em `docs/PRD.md`; o `/to-issues` salvará as issues como arquivos, não em
   tracker externo.
+- **Dívida — rotacionar `GEMINI_API_KEY` (2026-06-06).** O valor da chave apareceu
+  em texto puro no chat (seleção do `.env.local`) → tratada como comprometida.
+  Risco baixo (free tier, sem cartão; pior caso é queimar a cota grátis), por isso
+  não-urgente. Quando voltar à Vercel por outro motivo: gerar nova no Google AI
+  Studio → trocar no `.env.local` + Vercel → redeploy → só então apagar a antiga.
+  Hábito firmado: nunca colar chave no chat.
