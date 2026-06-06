@@ -38,6 +38,7 @@ Next.js (App Router) · Supabase (Postgres + auth) · Vercel · API de LLM.
 Em implementação, por vertical slices. O estado vivo — slice atual, próxima
 jogada, decisões em curso — é do [`CONTEXT.md`](CONTEXT.md); este README não o
 duplica. Núcleo puro completo e testado (config + motor + formatador + mapeador
-com LLM mockado); persistência e auth no ar; UI em curso pelo caminho
-determinístico (entrada manual + geração, antes da captura por LLM). Faltam:
-captura por texto livre e deploy.
+com LLM mockado); persistência, auth, captura manual e geração no ar. **O app
+está online na Vercel** — o caminho determinístico (registrar atividade → gerar
+relatório) já atinge o critério de pronto: online, funciona, Pedro usa. Falta só
+a captura por texto livre (LLM), comodidade sobre o que já roda.

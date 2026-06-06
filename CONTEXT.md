@@ -1,6 +1,6 @@
 # CONTEXT.md — first-real-project
 
-Última atualização: 2026-06-05 (slice 06 verificado; geração no ar — 1º relatório real ponta a ponta; atalho de login pra dev)
+Última atualização: 2026-06-06 (slice 10 ✓ — app no ar na Vercel, login e relatório real verificados em produção; produto atinge o sinal de pronto)
 
 ## O que é
 
@@ -136,11 +136,23 @@ CC0002), coladas na sessão de 2026-06-04/05. Formato de saída comum:
   `service_role` (`SUPABASE_SECRET_KEY` no `.env.local`) + `verifyOtp(token_hash)`. **Lição:** o
   fluxo PKCE do app (ADR 0003) barra magic link gerado por admin — falta o `code_verifier` no
   browser; o `token_hash` via `verifyOtp` contorna sem tocar o fluxo de produção.
-- **Próxima jogada:** (1) **captura por texto livre / LLM (slice 08)** — decisão de provider
+- **Deploy (slice 10) ✓** — app no ar na Vercel (`first-real-project-sable.vercel.app`,
+  domínio público sem deployment protection). Só as 2 env vars do Supabase na Vercel
+  (`SECRET_KEY` fica de fora — só serve ao dev-login, 404 em prod). Supabase auth: Site URL
+  + Redirect URL (`/auth/callback`) apontando pro domínio (localhost mantido na allowlist pro
+  dev). Login por magic link e relatório real **verificados em produção** ponta a ponta.
+  **Lição:** o "Link inválido ou expirado" em prod era **link de uso único reaberto** (não
+  prefetch de scanner) — bate com a consequência já prevista no ADR 0003. Clicar o link **uma
+  vez, no mesmo browser** que o pediu (aba anônima separada perde o cookie do `code_verifier`
+  PKCE). **Dívida anotada:** Next 16 deprecou `middleware` → renomear pra `proxy` (warning no
+  build, não bloqueia). **Produto atinge o sinal de pronto: online, funciona, Pedro usa.**
+- **Próxima jogada:** **captura por texto livre / LLM (slice 08)** — única peça que falta,
+  pura comodidade sobre o caminho determinístico que já roda em produção. Decisão de provider
   pendente (Claude `haiku` vs OpenAI `gpt-4o-mini`; SDK direta vs Vercel AI SDK; critério:
   modelo pequeno por custo) + ligar a chamada real no `ClienteLLM` + tela de confirmação.
-  (2) **deploy (slice 10)**. **Pré-requisito de runtime atualizado:** `.env.local` precisa de
-  URL + publishable key + `SUPABASE_SECRET_KEY` (esta última só pro atalho de dev).
+  **Pré-requisito de runtime:** `.env.local` com URL + publishable key + `SUPABASE_SECRET_KEY`
+  (só pro atalho de dev); ao fazer o 08, somar a env var do provider LLM no `.env.local` **e na
+  Vercel**.
 - **Transversal ✓** — registrado no sistema global em 2026-06-05: entrada na
   database [Construções](https://www.notion.so/376ab645e3bb81f6935fd72700848367)
   (status ativo) + ponteiro no `CONTEXT.md` global.
