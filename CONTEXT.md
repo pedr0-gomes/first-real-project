@@ -1,6 +1,6 @@
 # CONTEXT.md — first-real-project
 
-Última atualização: 2026-06-06 (slice 08 fatia mínima ✓ — captura por texto livre via Gemini 2.5-flash, **verificada em produção ponta a ponta**. Produto completo: 10/10 slices no ar.)
+Última atualização: 2026-06-09 (frente **Aprender o sistema** em curso — peças 1-3 vistas; retomar na peça 4. Ver seção abaixo. Produto segue completo: 10/10 slices no ar.)
 
 ## O que é
 
@@ -12,6 +12,68 @@ verdade, não-clone. Sinal de pronto: online, funciona, Pedro usa.
 
 **Motivação:** hoje Pedro faz isso via skills do Claude que queimam token e
 poluem contexto. O produto externaliza isso.
+
+## Aprender o sistema (frente ativa, desde 2026-06-09)
+
+**Contexto.** Pedro construiu este app no piloto automático — funcionou ponta a
+ponta, mas ele não entende o que o sistema faz por dentro. Construir comigo sem
+dominar o conteúdo já foi um aprendizado (como me usar); agora vem o movimento
+paralelo: **entender o sistema peça por peça** — não em profundidade de
+implementação, só o que cada peça faz e por que existe.
+
+**Como está montado.** É a 2ª rodada da esteira do **Aprender** (método global)
+rodando na mão, realizada via NotebookLM:
+- Notebook **"Aprender: first-real-project"** (id
+  `c826cf93-a952-4a3e-9572-371c04fb2f32`), na conta do Pedro.
+- Fontes: `README.md`, `CONTEXT.md`, `docs/PRD.md` (os 3 docs `.md`). O código
+  `.ts/.tsx` **não entrou** — o NotebookLM rejeita essas extensões (400) e subir
+  código privado a serviço externo bate no classificador de exfiltração do
+  harness. Ficou nos docs, que descrevem o trajeto bem.
+- Report gerado no notebook: **"Fluxo de Dados: da captura ao relatório"** —
+  traça o caminho do dado pelas 6 peças, com a fronteira LLM↔motor.
+
+**O trajeto (o mapa que Pedro vai aprender).** Texto livre → **1. Mapeador** (a
+IA estrutura, não calcula) → **2. Confirmação** (Pedro valida + atribui data) →
+**3. Persistência** (só atividades reais viram linha) → **4. Motor** (toda a
+matemática: fecha a carga com o coringa, levanta flags) → **5. Formatador**
+(string no template oficial) → **6. Tela** (relatório pra copiar). **Coração:** a
+peça que **entende** o texto (a IA) é separada da que **calcula** (o motor), de
+propósito — IA erra conta, conta não é adivinhação.
+
+**Combinado de como aprender.** Devagar, **uma peça por vez**, aqui no chat
+(conversa de ida e volta; o Claude adapta e confere) + NotebookLM de apoio
+(dúvida pontual sozinho). Régua: depois de cada peça, Pedro **reconta com as
+próprias palavras** — se travar, a explicação foi ruim e o Claude refaz (não é
+prova; é como saber se ficou claro).
+
+**Progresso (peça por peça, ancorado no código real).**
+- **Peça 1 — Mapeador ✓** (`src/mapeador/mapear.ts`). A IA entende o texto solto
+  e o arruma em caixinhas (categoria + horas). Proibido **calcular** e
+  **inventar**: categoria fora do vocabulário é ignorada; horas que faltam vêm do
+  default da config, não de chute da IA. Pedro recontou certo.
+- **Peça 2 — Confirmação ✓** (`src/app/captura/confirmar/page.tsx`). A tela onde
+  Pedro **confere, completa (a data) e libera**. É o porteiro: nada toca o banco
+  antes do clique "Salvar" (dados viajam em base64 na URL, não no DB). Recontou
+  certo.
+- **Peça 3 — Persistência ✓** (`src/app/captura/actions.ts`,
+  `src/app/actions/atividades.ts`). "Salvar" vira linhas no banco. Guarda **só o
+  real**; grade fixa e coringa **não** (recalculados de config/motor). Salva o
+  destilado **e** o texto cru (`raw_text`, repetido em cada linha da captura).
+  Régua respondida: deixar o coringa fora é esperto porque conta a gente **refaz,
+  não guarda** — se a regra mudar, o passado se conserta sozinho.
+
+**Onde paramos exatamente.** No ponto (2) da peça 3 — Pedro recontou o "por que o
+coringa fica fora do banco" de forma vaga ("reutilizar/adaptar o relatório") e eu
+o apertei com a formulação certa (recalcular vs. guardar; regra muda → passado se
+ajusta). Ele saiu antes de ler. **Próxima jogada: confirmar que esse ponto
+assentou (oferecer o exemplo da carga mudando de 8h→10h) e então abrir a peça 4 —
+o Motor (toda a matemática: fecha a carga com o coringa, levanta flags).**
+
+**Lição de entrega (vale pro Claude).** A 1ª tentativa sobrecarregou o Pedro —
+joguei o jargão do método (movimentos, "camada de evidência", "grelhar") e o
+report acadêmico denso de uma vez. Destravou ao trocar por **exemplo concreto do
+domínio dele** (podcast de 2h no LoOBI) e linguagem de gente. O método é andaime
+invisível; despejar o vocabulário dele no aprendiz é erro.
 
 ## Arquitetura decidida (via /investigar)
 
