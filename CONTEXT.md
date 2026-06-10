@@ -1,6 +1,6 @@
 # CONTEXT.md — first-real-project
 
-Última atualização: 2026-06-09 (frente **Aprender o sistema** em curso — peças 1-3 vistas; retomar na peça 4. Ver seção abaixo. Produto segue completo: 10/10 slices no ar.)
+Última atualização: 2026-06-10 (frente **Aprender o sistema** concluída — as 6 peças do trajeto recontadas por Pedro com as próprias palavras. Ver seção abaixo. Produto segue completo: 10/10 slices no ar.)
 
 ## O que é
 
@@ -60,20 +60,45 @@ prova; é como saber se ficou claro).
   real**; grade fixa e coringa **não** (recalculados de config/motor). Salva o
   destilado **e** o texto cru (`raw_text`, repetido em cada linha da captura).
   Régua respondida: deixar o coringa fora é esperto porque conta a gente **refaz,
-  não guarda** — se a regra mudar, o passado se conserta sozinho.
+  não guarda** — se a regra mudar, o passado se conserta sozinho. (Pedro confirmou
+  firme em 2026-06-10, dispensou o exemplo 8h→10h.)
+- **Peça 4 — Motor ✓** (`src/motor/consolidar.ts`). Faz **toda a conta**: (1)
+  divide o mês em semanas seg–dom; (2) fecha cada semana com o coringa (espalhado
+  uniforme nos dias úteis livres, teto soft que **guia** o coringa mas nunca corta
+  o real); (3) cola **flag** só no que foge do normal (`acima-do-alvo`,
+  `sem-atividade-real`, `carga-incompleta`, `parcial-proporcional`). Fio condutor:
+  **determinístico** = mesma entrada → mesma saída (o que a IA não garante; o
+  relatório se assina). Pedro cravou a diferença **3h** (preenche coringa, sem
+  flag — caso saudável) vs **10h** (não preenche, flag `acima-do-alvo`): flag é
+  **exceção, não rotina**.
+- **Peça 5 — Formatador ✓** (`src/formatador/formatar.ts`). `Consolidacao` →
+  string no template. **Não faz conta** (o Motor já fechou); só veste — `DD/MM`,
+  horas pt-BR (vírgula), romano. Escolhe a frase pela **origem**: coringa →
+  `atividadeCoringa`; real/grade → `vocabulario[cat].descricaoOficial`. A frase
+  vem **pronta da config**; ele escolhe, não inventa (lei central). Separado do
+  Motor porque **calcular ≠ apresentar** (mudar "I SEMANA"→"Semana 1" mexe só
+  aqui). Pedro recontou: do Motor vem o **esqueleto** (data/categoria/horas/
+  origem), da config vem a **frase**.
+- **Peça 6 — Tela ✓** (`src/app/relatorio/page.tsx`). **Orquestra, não calcula**:
+  3 linhas (41-43) = `listarAtividades → consolidar → formatar`, o trajeto inteiro
+  condensado, tudo no **servidor** (Server Component, chega pronto no browser).
+  Decide só **mês + projeto** (via URL) e **traduz a flag em PT** na seção
+  "Revisar" ("o motor sinaliza, a tela explica", linha 10). Pedro recontou certo.
 
-**Onde paramos exatamente.** No ponto (2) da peça 3 — Pedro recontou o "por que o
-coringa fica fora do banco" de forma vaga ("reutilizar/adaptar o relatório") e eu
-o apertei com a formulação certa (recalcular vs. guardar; regra muda → passado se
-ajusta). Ele saiu antes de ler. **Próxima jogada: confirmar que esse ponto
-assentou (oferecer o exemplo da carga mudando de 8h→10h) e então abrir a peça 4 —
-o Motor (toda a matemática: fecha a carga com o coringa, levanta flags).**
+**Onde paramos exatamente.** **Trajeto fechado** (2026-06-10). As 6 peças
+recontadas por Pedro com as próprias palavras; frente **Aprender o sistema
+concluída**. Próximo (se/quando quiser): uso real; slice 08 completo (grade fixa
+pré-preenchida na semana + editar/cancelar item à mão); dívida `middleware`→`proxy`
+do Next 16 (warning no build, não bloqueia).
 
-**Lição de entrega (vale pro Claude).** A 1ª tentativa sobrecarregou o Pedro —
-joguei o jargão do método (movimentos, "camada de evidência", "grelhar") e o
-report acadêmico denso de uma vez. Destravou ao trocar por **exemplo concreto do
-domínio dele** (podcast de 2h no LoOBI) e linguagem de gente. O método é andaime
-invisível; despejar o vocabulário dele no aprendiz é erro.
+**Lição de entrega (vale pro Claude).** (1) A 1ª tentativa (peça 1) sobrecarregou
+o Pedro — joguei o jargão do método (movimentos, "camada de evidência", "grelhar")
+e o report acadêmico denso de uma vez. Destravou ao trocar por **exemplo concreto
+do domínio dele** (podcast de 2h no LoOBI) e linguagem de gente. O método é andaime
+invisível; despejar o vocabulário dele no aprendiz é erro. (2) Pedro tende a
+responder **"por que"** repetindo o **"o quê"** com outras palavras (resposta
+circular) — apareceu nas peças 5 e 6. Destrava ao apertar pelo **contraste**: o
+que a peça **não** faz (Tela não soma/escolhe/fecha → logo, orquestra).
 
 ## Arquitetura decidida (via /investigar)
 
